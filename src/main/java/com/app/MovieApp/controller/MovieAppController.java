@@ -30,10 +30,10 @@ public class MovieAppController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-//	@GetMapping({"/api/Category/v1/getAllCategortype","/Category/v1/getAllCategortype"})
-//	public ResponseEntity<> getCategoryType(){
-//		
-//	}
+	@GetMapping({"/api/Category/v1/getAllCategortype","/Category/v1/getAllCategortype"})
+	public ResponseEntity<?> getCategoryType(){
+		return null;
+	}
 
 	@GetMapping("/carsouel")
 	public void Test() {
