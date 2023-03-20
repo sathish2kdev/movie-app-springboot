@@ -98,6 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/auth/v1/signup").permitAll()
 				.antMatchers("/auth/v1/signup").permitAll()
 				.antMatchers("/authToken/v1/refreshToken").permitAll()
+				.antMatchers("/check").permitAll()
 				.and().authorizeRequests().anyRequest().authenticated().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint).and()

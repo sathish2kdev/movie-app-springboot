@@ -1,6 +1,5 @@
 package com.app.MovieApp.signup.controller;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Set;
 
@@ -35,6 +34,7 @@ public class SignUpController {
 
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
+	
 
 	@PostMapping("/v1/signup")
 	@Transactional

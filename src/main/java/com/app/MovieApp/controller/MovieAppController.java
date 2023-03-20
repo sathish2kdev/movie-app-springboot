@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.MovieApp.dto.CarsouelContentDto;
+import com.app.MovieApp.dto.CategoryInformationDto;
 import com.app.MovieApp.dto.common.ResponseDto;
 import com.app.MovieApp.service.MovieAppService;
 
@@ -24,10 +25,15 @@ public class MovieAppController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
-	@GetMapping({ "/api/dashboard/v1/headerLabel", "/dashboard/v1/headerLabel" })
+	@GetMapping({ "/api/dashboard/v1/categorybasedcontent", "/dashboard/v1/categorybasedcontent" })
 	public ResponseEntity<?> getHeaderLabelContent() {
-		ResponseDto<List<String>> response = movieAppService.getHeaderDetails();
+		ResponseDto<List<CategoryInformationDto>> response = movieAppService.getHeaderDetails();
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping({"/api/dashboard/v1/getdetailsbasedonname","/dashboard/v1/getdetailsbasedonname"})
+	public ResponseEntity<?> getDetailsBasedonName(){
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping({"/api/Category/v1/getAllCategortype","/Category/v1/getAllCategortype"})

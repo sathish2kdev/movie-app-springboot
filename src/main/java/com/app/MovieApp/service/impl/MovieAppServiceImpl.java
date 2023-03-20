@@ -1,5 +1,6 @@
 package com.app.MovieApp.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,10 +12,14 @@ import org.springframework.stereotype.Service;
 
 import com.app.MovieApp.common.IDSContant;
 import com.app.MovieApp.dto.CarsouelContentDto;
+import com.app.MovieApp.dto.CategoryInformationDto;
+import com.app.MovieApp.dto.InformationDetailsDto;
 import com.app.MovieApp.dto.common.ResponseDto;
 import com.app.MovieApp.entity.CarsouelContentEntity;
+import com.app.MovieApp.entity.ContentDetailsEntity;
 import com.app.MovieApp.repository.CarsouelContentRepository;
 import com.app.MovieApp.repository.CategoryTypeRepository;
+import com.app.MovieApp.repository.ContentDetailsRepository;
 import com.app.MovieApp.service.MovieAppService;
 
 @Service
@@ -30,6 +35,9 @@ public class MovieAppServiceImpl implements MovieAppService {
 
 	@Autowired
 	ModelMapper modelMapper;
+
+	@Autowired
+	ContentDetailsRepository contentDetailsRepository;
 
 	@Override
 	public ResponseDto<List<CarsouelContentDto>> getCarsouelData() {
@@ -53,12 +61,20 @@ public class MovieAppServiceImpl implements MovieAppService {
 	}
 
 	@Override
-	public ResponseDto<List<String>> getHeaderDetails() {
+	public ResponseDto<List<CategoryInformationDto>> getHeaderDetails() {
 		logger.info("Start of getHeaderDetails in getCarsouelData");
-		ResponseDto<List<String>> response = new ResponseDto<>();
+		ResponseDto<List<CategoryInformationDto>> response = new ResponseDto<>();
 		try {
+			List<CategoryInformationDto> listCategoryInformation = new ArrayList<CategoryInformationDto>();
 			List<String> listOfCategory = categoryTypeRepository.findCategory();
-			response.setResponseData(listOfCategory);
+			for(String category : listOfCategory) {
+				CategoryInformationDto categoryInformationDto = new CategoryInformationDto();
+				categoryInformationDto.setCategory(category);
+				List<InformationDetailsDto> informationList = getCategoryWithDetails(category);
+				categoryInformationDto.setInformation(informationList);
+				listCategoryInformation.add(categoryInformationDto);
+			}
+			response.setResponseData(listCategoryInformation);
 			response.setCode(IDSContant.SUCCESS.getValue());
 		} catch (Exception e) {
 			response.setCode(IDSContant.FAILED.getValue());
@@ -67,6 +83,20 @@ public class MovieAppServiceImpl implements MovieAppService {
 			e.printStackTrace();
 		}
 		logger.info("End of getHeaderDetails in getCarsouelData");
-		return null;
+		return response;
+	}
+
+	public List<InformationDetailsDto> getCategoryWithDetails(String categoryType) {
+		List<InformationDetailsDto> informationList = null;
+		try {
+//			List<ContentDetailsEntity> contentDetails = contentDetailsRepository.findByCategoryType(categoryType);
+			List<ContentDetailsEntity> contentDetails = contentDetailsRepository.findByGenre(categoryType);
+			
+			
+			informationList = contentDetails.stream().map(p -> modelMapper.map(p, InformationDetailsDto.class)).collect(Collectors.toList()); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return informationList;
 	}
 }
