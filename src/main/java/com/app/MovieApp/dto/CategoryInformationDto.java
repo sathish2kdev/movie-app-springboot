@@ -11,7 +11,7 @@ import lombok.Setter;
 public class CategoryInformationDto {
 
 	private String category;
-	private List<InformationDetailsDto> information = new ArrayList<InformationDetailsDto>();
-
+	private String hiddenCategory;
+	private List<InformationMainDto> information = new ArrayList<InformationMainDto>();
 
 }

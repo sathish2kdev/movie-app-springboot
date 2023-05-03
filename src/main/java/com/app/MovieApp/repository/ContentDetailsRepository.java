@@ -14,4 +14,5 @@ public interface ContentDetailsRepository extends JpaRepository<ContentDetailsEn
 	
 	List<ContentDetailsEntity> findByGenre(String genre);
 
+	ContentDetailsEntity findByApplicationName(String applicationName);
 }

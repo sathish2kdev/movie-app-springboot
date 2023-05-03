@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.MovieApp.dto.CarsouelContentDto;
 import com.app.MovieApp.dto.CategoryInformationDto;
+import com.app.MovieApp.dto.InformationDetailsDto;
 import com.app.MovieApp.dto.common.ResponseDto;
 import com.app.MovieApp.service.MovieAppService;
 
@@ -26,14 +28,15 @@ public class MovieAppController {
 	}
 
 	@GetMapping({ "/api/dashboard/v1/categorybasedcontent", "/dashboard/v1/categorybasedcontent" })
-	public ResponseEntity<?> getHeaderLabelContent() {
-		ResponseDto<List<CategoryInformationDto>> response = movieAppService.getHeaderDetails();
+	public ResponseEntity<?> getHeaderLabelContent(@RequestParam("category") String category) {
+		ResponseDto<List<CategoryInformationDto>> response = movieAppService.getHeaderDetails(category);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@GetMapping({"/api/dashboard/v1/getdetailsbasedonname","/dashboard/v1/getdetailsbasedonname"})
-	public ResponseEntity<?> getDetailsBasedonName(){
-		return new ResponseEntity<>(HttpStatus.OK);
+	@GetMapping({"/api/dashboard/v1/getContentDetails","/dashboard/v1/getContentDetails"})
+	public ResponseEntity<?> getDetailsBasedonName(@RequestParam("applicantname") String applicantname){
+		ResponseDto<InformationDetailsDto> response = movieAppService.getContentDetails(applicantname);
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
 	@GetMapping({"/api/Category/v1/getAllCategortype","/Category/v1/getAllCategortype"})

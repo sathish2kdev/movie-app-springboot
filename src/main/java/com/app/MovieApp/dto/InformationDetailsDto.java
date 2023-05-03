@@ -26,4 +26,15 @@ public class InformationDetailsDto {
 	private String status;
 	
 	private String imgPath;
+	
+	private String link;
+	
+	private String imdbRating;
+
+	private String yourRating;
+
+	private String popularity;
+	
+	private String genreCategory;
+	
 }
