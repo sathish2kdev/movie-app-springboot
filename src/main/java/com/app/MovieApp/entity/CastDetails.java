@@ -1,4 +1,4 @@
-package com.app.MovieApp.dto;
+package com.app.MovieApp.entity;
 
 import java.util.Set;
 
@@ -15,7 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.app.MovieApp.entity.ContentDetailsEntity;
+import com.app.MovieApp.dto.PersonDetailsEntity;
 
 import lombok.Getter;
 import lombok.Setter;
