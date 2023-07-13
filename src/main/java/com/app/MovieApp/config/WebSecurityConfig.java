@@ -13,9 +13,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -30,7 +28,6 @@ import com.app.MovieApp.security.common.config.security.RestAuthenticationEntryP
 import com.app.MovieApp.security.common.config.security.jwt.JWTAuthenticationFilter;
 import com.app.MovieApp.security.common.config.security.jwt.JwtAuthenticationProvider;
 import com.app.MovieApp.security.common.config.security.jwt.service.JWTTokenService;
-import com.app.MovieApp.security.constants.SecurityConstants;
 
 /**
  * This is the configuration class for web security with JWT tokens
@@ -59,18 +56,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Resource
 	JWTTokenService jwtTokenService;
-	
+
 	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
-	
+
 	@Resource
 	CustomUserDetailsService customUserDetailsService;
-	/**
-	 * This method is used to generate the JWTAuthenticationFilter
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
 
 //	protected JWTAuthenticationFilter buildJWTAuthenticationFilter() throws Exception {
 //		List<String> pathsToSkip = Arrays.asList("/api/**");
@@ -86,21 +77,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return filter;
 	}
 
-	/**
-	 * This method is contains information about how to authenticate our users.
-	 * 
-	 * @see WebSecurityConfig
-	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/").permitAll().antMatchers("/auth/v1/login")
-				.permitAll().antMatchers(SecurityConstants.pathToSkip).permitAll()
-				.antMatchers("/auth/v1/signup").permitAll()
-				.antMatchers("/auth/v1/signup").permitAll()
-				.antMatchers("/authToken/v1/refreshToken").permitAll()
-				.antMatchers("/check").permitAll()
-				.and().authorizeRequests().anyRequest().authenticated().and()
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers("/").permitAll()
+				.antMatchers("/auth/v1/login").permitAll().antMatchers("/").permitAll()
+				.antMatchers("/auth/v1/signup").permitAll().antMatchers("/auth/v1/signup").permitAll()
+				.antMatchers("/authToken/v1/refreshToken").permitAll().antMatchers("/check").permitAll().and()
+				.authorizeRequests().anyRequest().authenticated().and().sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
 				.authenticationEntryPoint(authenticationEntryPoint).and()
 				.addFilterBefore(buildJWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
 				.addFilterBefore(new LoginFilter("/login", successHandler, failureHandler, authenticationManager()),
@@ -108,9 +92,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.headers().cacheControl();
 	}
 
-	/**
-	 * This method is used to configure the authentication providers
-	 */
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder);
@@ -120,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
-		
+
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
@@ -131,10 +112,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-	
+
 	@Override
 	public void configure(WebSecurity webSecurity) {
-		webSecurity.ignoring().antMatchers("v1/api-docs","swagger-ui.html");
+		webSecurity.ignoring().antMatchers("v1/api-docs", "swagger-ui.html");
 	}
-	
+
 }

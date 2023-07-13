@@ -3,7 +3,6 @@ package com.app.MovieApp.security.common.config.security.jwt.service.impl;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -75,22 +74,6 @@ public class JWTTokenServiceImpl implements JWTTokenService {
 				.signWith(SignatureAlgorithm.HS512, env.getProperty(TOKENSIGNINGKEY)).compact();
 	}
 
-//	@Override
-//	public String createRefreshToken(UserContext userContext) {
-//		if (StringUtils.isBlank(userContext.getUserName())) {
-//			throw new IllegalArgumentException("Cannot create JWT Token without username");
-//		}
-//		Claims claims = Jwts.claims().setSubject(userContext.getUserName());
-//		claims.put("scopes", Arrays.asList("SADFSAD"));
-//		LocalDateTime currentTime = LocalDateTime.now();
-//
-//		return Jwts.builder().setClaims(claims).setIssuer(env.getProperty(TOKEN_ISSUER))
-//				.setIssuedAt(Date.from(currentTime.atZone(ZoneId.systemDefault()).toInstant()))
-//				.setExpiration(Date.from(currentTime.plusMinutes(Integer.parseInt(env.getProperty(TOKENEXPIRATIONTIME)))
-//						.atZone(ZoneId.systemDefault()).toInstant()))
-//				.signWith(SignatureAlgorithm.HS512, env.getProperty(TOKENSIGNINGKEY)).compact();
-//	}
-
 	@Override
 	public String ExtractToken(HttpServletRequest request) {
 		// HttpHeaders header = request.getHeaderNames();
@@ -109,13 +92,6 @@ public class JWTTokenServiceImpl implements JWTTokenService {
 		return header.substring(HEADER_PREFIX.length(), header.length());
 	}
 
-	/**
-	 * Parses and validates JWT Token signature.
-	 * 
-	 * @throws BadCredentialsException
-	 * @throws JwtExpiredTokenException
-	 * 
-	 */
 	@Override
 	public UserContext parseClaims(String accessToken) {
 		UserContext userContext = null;

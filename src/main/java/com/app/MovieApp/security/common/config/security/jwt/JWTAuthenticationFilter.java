@@ -19,10 +19,6 @@ import com.app.MovieApp.security.common.config.security.jwt.service.JWTTokenServ
 
 /**
  * @author Sathish S
- *
- *         This class used to provide custom processing of authentication
- *         requests. If the api request comes from {/api/**} then this filter
- *         class will be invoked.
  */
 public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
@@ -36,10 +32,6 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		this.failureHandler = failureHandler;
 	}
 
-	/**
-	 * This method is used to De-serialization and basic validation of the
-	 * incoming JSON payload.
-	 */
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
@@ -48,9 +40,6 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		return auth;
 	}
 
-	/**
-	 * This method is invoked while the authentication success.
-	 */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication authResult) throws IOException, ServletException {
@@ -60,9 +49,6 @@ public class JWTAuthenticationFilter extends AbstractAuthenticationProcessingFil
 		chain.doFilter(request, response);
 	}
 
-	/**
-	 * This method is invoked while the authentication unsuccessful.
-	 */
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {

@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import com.app.MovieApp.security.login.dto.UserContext;
 
 public class JwtAuthenticationToken extends AbstractAuthenticationToken {
-	private static final long serialVersionUID = 2877954820905567501L;
 
 	private String rawAccessToken;
 	private UserContext userContext;

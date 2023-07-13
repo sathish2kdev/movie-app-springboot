@@ -35,8 +35,6 @@ import com.app.MovieApp.security.login.dto.UserContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * If authentication success, the configured LoginAuthenticationSuccessHandler
- * will be invoked and it returns JWT Token.
  * 
  * @author Sathish S
  */
@@ -49,10 +47,7 @@ public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessH
 	@Resource
 	LoginService loginService;
 
-	/**
-	 * This method is used to create the JWT Token. while the authentication
-	 * success.
-	 */
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
@@ -109,11 +104,6 @@ public class LoginAuthenticationSuccessHandler implements AuthenticationSuccessH
 		clearAuthenticationAttributes(request);
 	}
 
-	/**
-	 * Removes temporary authentication-related data which may have been stored in
-	 * the session during the authentication process..
-	 * 
-	 */
 	protected final void clearAuthenticationAttributes(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		if (session == null) {

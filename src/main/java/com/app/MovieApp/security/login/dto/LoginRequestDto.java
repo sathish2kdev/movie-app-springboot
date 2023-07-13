@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LoginRequestDto implements Serializable {
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@JsonProperty("username")

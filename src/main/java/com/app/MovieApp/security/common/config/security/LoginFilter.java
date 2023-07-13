@@ -24,13 +24,6 @@ import com.app.MovieApp.security.common.config.exception.AuthMethodNotSupportedE
 import com.app.MovieApp.security.login.dto.LoginRequestDto;
 import com.app.MovieApp.security.login.dto.UserContext;
 
-/**
- * @author Praveen
- *
- *         This class used to provide custom processing of authentication
- *         requests. If the api request comes from {/login} then this filter
- *         class will be invoked.
- */
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
@@ -48,11 +41,7 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 		this.failureHandler = failureHandler;
 	}
 
-	/**
-	 * This method is used to De-serialization and basic validation of
-	 * 
-	 * the incoming JSON payload.
-	 */
+
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException, IOException, ServletException {
@@ -77,37 +66,18 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 		}
 		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(creds.getUserName(),
 				creds.getPassword());
-		/*
-		 * UsernamePasswordAuthenticationToken token = new
-		 * UsernamePasswordAuthenticationToken(creds.getUserName(),
-		 * Base64.decode(creds.getPassword()));
-		 */
-
-		/**
-		 * Here check the role of user
-		 */
+		
 		Authentication authentication = this.getAuthenticationManager().authenticate(token);
-//		UserContext userContext = (UserContext) authentication.getDetails();
-		//if (!creds.getAccessType().equals(userContext.getAccessType()))
-//		if (!creds.getAccessType().equals("user")) {
-//			logger.error("This user does not have permission to access ");
-//			throw new AuthenticationServiceException("This user does not have permission to access ");
-//		}
+
 		return authentication;
 	}
 
-	/**
-	 * This method is invoked while the authentication success.
-	 */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 		successHandler.onAuthenticationSuccess(req, res, auth);
 	}
 
-	/**
-	 * This method is invoked while the authentication unsuccessful.
-	 */
 	@Override
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
@@ -115,13 +85,4 @@ public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 		failureHandler.onAuthenticationFailure(request, response, failed);
 	}
 
-//	public static void main(String[] args) {
-//		// Encode data on your side using BASE64
-//		byte[] bytesEncoded = Base64.encodeBase64("1".getBytes());
-//		System.out.println("encoded value is " + new String(bytesEncoded));
-//
-//		// Decode data on other side, by processing encoded data
-//		byte[] valueDecoded = Base64.decodeBase64(bytesEncoded);
-//		System.out.println("Decoded value is " + new String(valueDecoded));
-//	}
 }

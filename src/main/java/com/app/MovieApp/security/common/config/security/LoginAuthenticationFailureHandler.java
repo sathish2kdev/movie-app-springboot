@@ -20,29 +20,17 @@ import com.app.MovieApp.security.common.config.security.constants.ErrorCode;
 import com.app.MovieApp.security.common.config.security.dto.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * This is an implementation class for AuthenticationFailureHandler. If
- * authentication fails, the configured AuthenticationFailureHandler will be
- * invoked.
- * 
- * @author Praveen
- *
- */
 
 @Component
 public class LoginAuthenticationFailureHandler implements AuthenticationFailureHandler {
 
-	/**
-	 * This is an customized class for handling authentication fails.
-	 */
+	
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		Class aClass = exception.getClass();
-		System.out.println("exception->" + aClass.getName());
-		System.out.println(exception.getMessage());
 		if (exception instanceof BadCredentialsException) {
 			new ObjectMapper().writeValue(response.getWriter(), new ErrorResponse("Invalid username or password",
 					ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED));

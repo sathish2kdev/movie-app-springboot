@@ -10,11 +10,6 @@ import org.springframework.stereotype.Component;
 import com.app.MovieApp.security.common.config.security.jwt.service.JWTTokenService;
 import com.app.MovieApp.security.login.dto.UserContext;
 
-/**
- * 
- * @author Praveen This class implements AuthenticationProvider.
- * 
- */
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 

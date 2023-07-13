@@ -5,10 +5,7 @@ import java.util.Date;
 import org.springframework.http.HttpStatus;
 
 import com.app.MovieApp.security.common.config.security.constants.ErrorCode;
-/**
- * @author Praveen
- *
- */
+
 
 public class ErrorResponse {
 
