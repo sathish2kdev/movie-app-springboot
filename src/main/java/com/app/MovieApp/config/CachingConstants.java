@@ -4,10 +4,6 @@ package com.app.MovieApp.config;
  *//*
 package com.app.MovieApp.comp.ratingengine.common.config;
 
-*//**
- * @author Praveen Kumar @
- *//*
-
 public interface CachingConstants {
 
 	public static final String SERVICE_TAX = "SERVICE_TAX";
