@@ -24,17 +24,5 @@ public class Application {
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}
-
-	
-	@Bean
-	public RestTemplate restTemplate1() {
-		return new RestTemplate();
-	}
-
-
-	@Bean
-	public RestTemplate restTemplate2() {
-		return new RestTemplate();
-	}
 	
 }
