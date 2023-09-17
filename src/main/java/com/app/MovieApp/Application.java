@@ -27,7 +27,7 @@ public class Application {
 
 	
 	@Bean
-	public RestTemplate restTemplate1() {
+	public RestTemplate restTemplate3() {
 		return new RestTemplate();
 	}
 
